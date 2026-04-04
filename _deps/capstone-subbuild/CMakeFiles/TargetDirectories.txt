@@ -1,0 +1,3 @@
+C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-subbuild/CMakeFiles/capstone-populate.dir
+C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-subbuild/CMakeFiles/edit_cache.dir
+C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-subbuild/CMakeFiles/rebuild_cache.dir

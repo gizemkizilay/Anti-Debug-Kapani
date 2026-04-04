@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/cmake_install.cmake",
+		"C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
