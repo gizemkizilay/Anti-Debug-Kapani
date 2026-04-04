@@ -1,46 +1,49 @@
-Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
-1. Proje Özeti ve Amacı
-Bu projenin amacı, siber güvenlik dünyasında "Evasion" (Sakınma) teknikleri üzerine uzmanlaşmış, uygulamanın kendi çalışma zamanı (runtime) ortamını analiz ederek bir hata ayıklayıcı (debugger) tarafından izlenip izlenmediğini tespit eden otonom bir koruma mekanizması geliştirmektir. Tespit anında uygulama, analizciye hiçbir uyarı vermeden (silent exit) kendi sürecini sonlandırarak tersine mühendislik faaliyetini akamete uğratır.
+# 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
 
-2. Teknik Derinlik ve Analiz Heuristikleri
+Bu proje, Tersine Mühendislik vize ödevi kapsamında geliştirilmiş; uygulamanın kendi çalışma zamanı (runtime) ortamını analiz ederek bir hata ayıklayıcı (debugger) tarafından izlenip izlenmediğini tespit eden otonom bir koruma mekanizmasıdır.
+
+## 1. Proje Özeti ve Amacı
+Projenin temel amacı, siber güvenlik dünyasında "Evasion" (Sakınma) teknikleri üzerine uzmanlaşmış, analiz araçlarını (x64dbg, WinDbg vb.) hissettiği an kullanıcıya veya analiste hiçbir uyarı vermeden (silent exit) süreci sonlandıran bir güvenlik katmanı inşa etmektir.
+
+
+
+## 2. Teknik Derinlik ve Analiz Heuristikleri
 Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işlemci mimarisi seviyesinde derinlemesine kontroller yapar:
 
-A. İşletim Sistemi Seviyesi Denetimler (Windows Kernel & libc)
-PEB (Process Environment Block) Analizi: IsDebuggerPresent() mantığı kullanılarak, Windows çekirdeğinin sürece dair tuttuğu "BeingDebugged" bayrağı kontrol edilir.
+### A. İşletim Sistemi Seviyesi Denetimler (Windows Kernel & libc)
+* **PEB (Process Environment Block) Analizi:** `IsDebuggerPresent()` kontrolü ile Windows çekirdeğinin süreç için tuttuğu "BeingDebugged" bayrağı anlık olarak sorgulanır.
+* **Sessiz İnfaz (libc):** `stdlib.h` kütüphanesi üzerinden sağlanan `exit(0)` çağrısı kullanılır. Bu sayede tersine mühendisin "exception handling" veya "message box" üzerinden iz sürmesi engellenmiş olur.
 
-Sessiz İnfaz (libc): stdlib.h üzerinden sağlanan exit(0) çağrısı ile uygulama sonlandırılır. Bu, tersine mühendisin hata yakalama (exception handling) mekanizmalarını kullanarak analiz yapmasını imkansız hale getirir.
+### B. Bellek ve Kod Bütünlüğü Denetimi (Capstone Engine)
+* **Software Breakpoint Avı (0xCC / INT 3 Tespit):** Debugger'ların kod akışını durdurmak için enjekte ettiği `0xCC` byte'larını tespit eder.
+* **Dinamik Disassembly:** `Capstone Engine` kullanılarak, uygulamanın kritik fonksiyonları çalışma anında de-compile edilir.
+* **Opcode Doğrulama:** Bellekteki makine kodu taranarak orijinal opcode yapısında bir bozulma veya dışarıdan müdahale (inline patching) olup olmadığı doğrulanır.
 
-B. Bellek ve Kod Bütünlüğü Denetimi (Capstone Engine)
-Software Breakpoint Avı (INT 3 Tespit): Debugger'lar, kodun akışını durdurmak için makine kodunun arasına 0xCC (x86/x64 için INT 3) byte'ı enjekte eder. Uygulama, kendi .text (çalıştırılabilir kod) bölümünü Capstone motoru ile disassemble ederek araya sıkıştırılmış bu yabancı byte'ları tarar.
 
-Dinamik Opcode Doğrulama: Capstone Engine kullanılarak kritik fonksiyonlar çalışma anında de-compile edilir. Orijinal opcode yapısındaki herhangi bir bozulma (inline hooking veya patching) anında tespit edilir.
 
-3. Somut Çıktılar (Deliverables)
-Güvenli Binary (.exe): Capstone ve Anti-Debug mekanizmalarını içeren, optimize edilmiş Windows x64 uygulaması.
+## 3. Geliştirme Yol Haritası (Milestones)
 
-Otomatik Test Senaryosu: Uygulamanın normal şartlarda (Release) sorunsuz çalıştığını, ancak bir debugger (x64dbg) altına alındığında saniyesinde kapandığını gösteren canlı test ortamı.
+### 📅 Aşama 1: Ortam Hazırlığı ve Entegrasyon
+* C++ geliştirme ortamının yapılandırılması.
+* `Capstone Engine` kütüphanesinin projeye dahil edilmesi ve CMake konfigürasyonlarının tamamlanması.
 
-Gelişmiş Tehdit Modeli: Tersine mühendisin bu kontrolleri "Patching" yöntemiyle atlatmaya çalışmasına karşı geliştirilen "Silent Exit" direnç stratejisi.
+### 🔍 Aşama 2: Windows API Kontrolleri
+* `windows.h` üzerinden temel anti-debug bayraklarının kodlanması ve PEB yapısının sorgulanması.
 
-4. Geliştirme Yol Haritası (Milestones)
-Aşama 1: Ortam Hazırlığı ve Kütüphane Entegrasyonu
-Visual Studio ve CMake derleme ortamının yapılandırılması.
+### 🧠 Aşama 3: Capstone ile Bellek Analizi
+* Kritik fonksiyonların bellek adreslerinin Capstone motoruna beslenerek çalışma anında assembly çıktısının alınması.
+* Yazılım kesmelerinin (breakpoint) taranması ve tespit algoritmasının optimizasyonu.
 
-Capstone Engine kütüphanesinin (libcapstone) projeye dahil edilmesi ve linklenmesi.
+### 🛡️ Aşama 4: Optimizasyon ve Test
+* Projenin **Release** modunda derlenerek "False-Positive" durumlarının elenmesi.
+* x64dbg ve benzeri araçlarla stres testlerinin yapılması.
 
-Aşama 2: Windows API ve PEB Kontrolleri
-windows.h kütüphanesi üzerinden temel anti-debug bayraklarının kodlanması.
+## 4. Somut Çıktılar
+* **Güvenli Binary (.exe):** Anti-debug mekanizmalarını içeren optimize edilmiş Windows uygulaması.
+* **Kaynak Kodlar:** Modüler ve yorum satırlarıyla zenginleştirilmiş C++ kodları.
+* **CMake Yapısı:** Projenin her ortamda kolayca derlenebilmesini sağlayan konfigürasyon dosyaları.
 
-IsDebuggerPresent mantığının çekirdek fonksiyona entegre edilmesi.
-
-Aşama 3: Capstone ile Bellek Taraması
-Kritik fonksiyonların bellek adreslerinin tespit edilmesi.
-
-Capstone motorunun x64 modunda başlatılarak bellekteki opcode'ların anlık analizi.
-
-0xCC byte'ı tarama algoritmasının optimize edilmesi.
-
-Aşama 4: Optimizasyon ve Sessiz Kapanış
-Release modunda derleme yapılarak "False-Positive" (hatalı tespit) durumlarının elenmesi.
-
-Tersine mühendislik araçlarıyla (x64dbg) stres testlerinin yapılması ve projenin teslim haline getirilmesi.
+---
+**Hazırlayan:** Gizem Kızılay  
+**Ders:** Tersine Mühendislik (Reverse Engineering) - Vize Projesi  
+**Tarih:** 4 Nisan 2026
