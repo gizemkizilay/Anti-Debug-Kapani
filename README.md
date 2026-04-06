@@ -1,6 +1,5 @@
-<p align="center">
-  <img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="[https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9](https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9)" />
-</p>
+<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/5f914303-57e1-4d37-99bd-c368da9900bc" />
+
 
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
 
