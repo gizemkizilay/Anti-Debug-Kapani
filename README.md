@@ -1,5 +1,6 @@
-<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9" />
-
+<p align="center">
+  <img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="[https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9](https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9)" />
+</p>
 
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
 
@@ -25,7 +26,8 @@ Bu proje, Tersine Mühendislik vize ödevi kapsamında geliştirilmiş; uygulama
 3. [Geliştirme Yol Haritası](#3-geliştirme-yol-haritası)
 4. [Somut Çıktılar](#4-somut-çıktılar)
 5. [Kurulum ve Derleme](#5-kurulum-ve-derleme)
-6. [Yasal Uyarı](#6-yasal-uyarı)
+6. [Beklenen Derinlik ve Özdeğerlendirme](#6-beklenen-derinlik-ve-özdeğerlendirme)
+7. [Yasal Uyarı](#7-yasal-uyarı)
 
 ---
 
@@ -69,14 +71,14 @@ Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işle
 ## 5. Kurulum ve Derleme
 Projeyi bağımlılıklarıyla beraber derlemek için aşağıdaki adımları izleyin:
 ```bash
-git clone [https://github.com/gizemkizilay/Anti-Debug-Kapani.git](https://github.com/gizemkizilay/Anti-Debug-Kapani.git)
+git clone https://github.com/gizemkizilay/Anti-Debug-Kapani.git
 cd Anti-Debug-Kapani
 mkdir build && cd build
 cmake ..
 cmake --build . --config Release
+```
 
 ## 6. Beklenen Derinlik ve Özdeğerlendirme
-
 * **1. Neden Bu Mimari Seçildi?:** Geleneksel anti-debug yöntemleri (örneğin sadece `IsDebuggerPresent` kullanımı) modern tersine mühendisler tarafından kolayca yamalanabilir (patch). Bu nedenle sadece API seviyesinde kalmayıp, işletim sistemi çekirdeği (PEB) ve işlemci/bellek seviyesinde (INT3 taraması, Opcode doğrulama) çok katmanlı ve hibrit bir mimari tercih edilmiştir.
 * **2. Ana Güvenlik Sonuçları:** Sistem, zararlı analiz araçlarına karşı yüksek bir başarıyla "silent exit" (sessiz kapanış) sergiler. Analiste hiçbir hata mesajı vermeyerek "Exception Handling" üzerinden iz sürmeyi imkansız kılar ve kodun çalışma anındaki (runtime) bütünlüğünü garanti altına alır.
 * **3. Üretim (Production) Kullanımı ve Genişletilebilirlik:** Bu prototip, üretim aşamasında ticari yazılımların DRM (Dijital Haklar Yönetimi) sistemlerine, lisanslama modüllerine veya oyunların Anti-Cheat (Hile Koruma) motorlarına doğrudan entegre edilebilir. Gelecekte projeye kod karmaşıklaştırma (Obfuscation), Anti-Dump teknikleri ve Ring0 (Kernel Mode) sürücü seviyesi kontroller eklenerek sistem çok daha ileri bir seviyeye taşınabilir.
