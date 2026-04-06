@@ -1,0 +1,20 @@
+# C++ ve CMake Ignore Listesi
+# Derleme klasörleri
+build/
+out/
+bin/
+
+# IDE dosyaları
+.vs/
+*.user
+*.suo
+
+# İşletim sistemi kalıntıları
+Thumbs.db
+.DS_Store
+
+# Derlenmiş dosyalar (Kaynak kod dışındakiler)
+*.obj
+*.o
+*.pdb
+*.ilk
