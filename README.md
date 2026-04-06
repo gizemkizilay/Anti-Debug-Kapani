@@ -74,3 +74,9 @@ cd Anti-Debug-Kapani
 mkdir build && cd build
 cmake ..
 cmake --build . --config Release
+
+## 6. Beklenen Derinlik ve Özdeğerlendirme
+
+* **1. Neden Bu Mimari Seçildi?:** Geleneksel anti-debug yöntemleri (örneğin sadece `IsDebuggerPresent` kullanımı) modern tersine mühendisler tarafından kolayca yamalanabilir (patch). Bu nedenle sadece API seviyesinde kalmayıp, işletim sistemi çekirdeği (PEB) ve işlemci/bellek seviyesinde (INT3 taraması, Opcode doğrulama) çok katmanlı ve hibrit bir mimari tercih edilmiştir.
+* **2. Ana Güvenlik Sonuçları:** Sistem, zararlı analiz araçlarına karşı yüksek bir başarıyla "silent exit" (sessiz kapanış) sergiler. Analiste hiçbir hata mesajı vermeyerek "Exception Handling" üzerinden iz sürmeyi imkansız kılar ve kodun çalışma anındaki (runtime) bütünlüğünü garanti altına alır.
+* **3. Üretim (Production) Kullanımı ve Genişletilebilirlik:** Bu prototip, üretim aşamasında ticari yazılımların DRM (Dijital Haklar Yönetimi) sistemlerine, lisanslama modüllerine veya oyunların Anti-Cheat (Hile Koruma) motorlarına doğrudan entegre edilebilir. Gelecekte projeye kod karmaşıklaştırma (Obfuscation), Anti-Dump teknikleri ve Ring0 (Kernel Mode) sürücü seviyesi kontroller eklenerek sistem çok daha ileri bir seviyeye taşınabilir.
