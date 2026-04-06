@@ -1,6 +1,0 @@
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/CMakeFiles/AntiDebugTrap.dir
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/CMakeFiles/edit_cache.dir
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/CMakeFiles/rebuild_cache.dir
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-build/CMakeFiles/capstone.dir
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-build/CMakeFiles/edit_cache.dir
-C:/Users/gizem/.gemini/antigravity/scratch/AntiDebugTrap/build/_deps/capstone-build/CMakeFiles/rebuild_cache.dir
