@@ -1,5 +1,9 @@
 <img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/5f914303-57e1-4d37-99bd-c368da9900bc" />
 
+![C++](https://img.shields.io/badge/C++-17-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
+
 
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
 
