@@ -1,11 +1,37 @@
+<p align="center">
+  <img src="https://www.istinye.edu.tr/sites/default/files/inline-images/isu_logo_tr_0.png" width="200" alt="İstinye Üniversitesi Logosu">
+</p>
+
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
+
+[![C++ Build](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions/workflows/build.yml/badge.svg)](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions/workflows/build.yml)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![C++](https://img.shields.io/badge/C++-17-blue.svg)
 
 Bu proje, Tersine Mühendislik vize ödevi kapsamında geliştirilmiş; uygulamanın kendi çalışma zamanı (runtime) ortamını analiz ederek bir hata ayıklayıcı (debugger) tarafından izlenip izlenmediğini tespit eden otonom bir koruma mekanizmasıdır.
 
+---
+
+## 👨‍🏫 Akademik Bilgiler
+* **Üniversite:** İstinye Üniversitesi
+* **Ders:** Tersine Mühendislik (Reverse Engineering)
+* **Danışman Eğitmen:** Keyvan Arasteh Abbasabad
+* **Geliştirici:** Gizem Kızılay
+
+---
+
+## 📖 İçindekiler
+1. [Proje Özeti ve Amacı](#1-proje-özeti-ve-amacı)
+2. [Teknik Derinlik ve Analiz Heuristikleri](#2-teknik-derinlik-ve-analiz-heuristikleri)
+3. [Geliştirme Yol Haritası](#3-geliştirme-yol-haritası)
+4. [Somut Çıktılar](#4-somut-çıktılar)
+5. [Kurulum ve Derleme](#5-kurulum-ve-derleme)
+6. [Yasal Uyarı](#6-yasal-uyarı)
+
+---
+
 ## 1. Proje Özeti ve Amacı
 Projenin temel amacı, siber güvenlik dünyasında "Evasion" (Sakınma) teknikleri üzerine uzmanlaşmış, analiz araçlarını (x64dbg, WinDbg vb.) hissettiği an kullanıcıya veya analiste hiçbir uyarı vermeden (silent exit) süreci sonlandıran bir güvenlik katmanı inşa etmektir.
-
-
 
 ## 2. Teknik Derinlik ve Analiz Heuristikleri
 Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işlemci mimarisi seviyesinde derinlemesine kontroller yapar:
@@ -18,8 +44,6 @@ Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işle
 * **Software Breakpoint Avı (0xCC / INT 3 Tespit):** Debugger'ların kod akışını durdurmak için enjekte ettiği `0xCC` byte'larını tespit eder.
 * **Dinamik Disassembly:** `Capstone Engine` kullanılarak, uygulamanın kritik fonksiyonları çalışma anında de-compile edilir.
 * **Opcode Doğrulama:** Bellekteki makine kodu taranarak orijinal opcode yapısında bir bozulma veya dışarıdan müdahale (inline patching) olup olmadığı doğrulanır.
-
-
 
 ## 3. Geliştirme Yol Haritası (Milestones)
 
@@ -43,7 +67,11 @@ Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işle
 * **Kaynak Kodlar:** Modüler ve yorum satırlarıyla zenginleştirilmiş C++ kodları.
 * **CMake Yapısı:** Projenin her ortamda kolayca derlenebilmesini sağlayan konfigürasyon dosyaları.
 
----
-**Hazırlayan:** Gizem Kızılay  
-**Ders:** Tersine Mühendislik (Reverse Engineering) - Vize Projesi  
-**Tarih:** 4 Nisan 2026
+## 5. Kurulum ve Derleme
+Projeyi bağımlılıklarıyla beraber derlemek için aşağıdaki adımları izleyin:
+```bash
+git clone [https://github.com/gizemkizilay/Anti-Debug-Kapani.git](https://github.com/gizemkizilay/Anti-Debug-Kapani.git)
+cd Anti-Debug-Kapani
+mkdir build && cd build
+cmake ..
+cmake --build . --config Release
