@@ -1,6 +1,5 @@
-<p align="center">
-  <img src="https://www.istinye.edu.tr/sites/default/files/inline-images/isu_logo_tr_0.png" width="200" alt="İstinye Üniversitesi Logosu">
-</p>
+<img width="600" height="600" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/06020fa8-04e7-49d5-8506-0e634566d5b8" />
+
 
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
 
