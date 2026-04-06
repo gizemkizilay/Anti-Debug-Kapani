@@ -1,4 +1,4 @@
-<img width="600" height="600" alt="istinye-universitesi-logo-png_seeklogo-610039" src="https://github.com/user-attachments/assets/06020fa8-04e7-49d5-8506-0e634566d5b8" />
+<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/86b2a83f-bf50-44ba-b7da-7bebf839e7c9" />
 
 
 # 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
