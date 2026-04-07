@@ -1,87 +1,63 @@
-<img width="1280" height="305" alt="İstinye_Üniversitesi_logo svg" src="https://github.com/user-attachments/assets/5f914303-57e1-4d37-99bd-c368da9900bc" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5f914303-57e1-4d37-99bd-c368da9900bc" alt="İstinye Üniversitesi" width="300"/>
+</p>
 
-![C++](https://img.shields.io/badge/C++-17-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)
+### 👤 Proje Bilgileri
 
+| | |
+|---|---|
+| **Öğrenci** | Gizem Kızılay |
+| **Danışman Eğitmen** | Keyvan Arasteh Abbasabad |
+| **Üniversite** | İstinye Üniversitesi |
+| **Ders** | Tersine Mühendislik (Reverse Engineering) |
 
-# 🛡️ Advanced Anti-Debug Trap & Dynamic Analysis Evasion (Windows x64)
+# 🛡️ Anti-Debug Trap - Dynamic Analysis Evasion & Memory Protection
 
-[![C++ Build](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions/workflows/build.yml/badge.svg)](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions/workflows/build.yml)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![C++](https://img.shields.io/badge/C++-17-blue.svg)
+![C++](https://img.shields.io/badge/Language-C++17-00599C?style=flat-square&logo=c%2B%2B)
+![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
+[![CI/CD](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions/workflows/build.yml/badge.svg)](https://github.com/gizemkizilay/Anti-Debug-Kapani/actions)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat-square&logo=windows)
 
-Bu proje, Tersine Mühendislik vize ödevi kapsamında geliştirilmiş; uygulamanın kendi çalışma zamanı (runtime) ortamını analiz ederek bir hata ayıklayıcı (debugger) tarafından izlenip izlenmediğini tespit eden otonom bir koruma mekanizmasıdır.
-
----
-
-## 👨‍🏫 Akademik Bilgiler
-* **Üniversite:** İstinye Üniversitesi
-* **Ders:** Tersine Mühendislik (Reverse Engineering)
-* **Danışman Eğitmen:** Keyvan Arasteh Abbasabad
-* **Geliştirici:** Gizem Kızılay
-
----
-
-## 📖 İçindekiler
-1. [Proje Özeti ve Amacı](#1-proje-özeti-ve-amacı)
-2. [Teknik Derinlik ve Analiz Heuristikleri](#2-teknik-derinlik-ve-analiz-heuristikleri)
-3. [Geliştirme Yol Haritası](#3-geliştirme-yol-haritası)
-4. [Somut Çıktılar](#4-somut-çıktılar)
-5. [Kurulum ve Derleme](#5-kurulum-ve-derleme)
-6. [Beklenen Derinlik ve Özdeğerlendirme](#6-beklenen-derinlik-ve-özdeğerlendirme)
-7. [Yasal Uyarı](#7-yasal-uyarı)
+[🇹🇷 Türkçe](#turkce) | [🇬🇧 English](#english)
 
 ---
 
-## 1. Proje Özeti ve Amacı
-Projenin temel amacı, siber güvenlik dünyasında "Evasion" (Sakınma) teknikleri üzerine uzmanlaşmış, analiz araçlarını (x64dbg, WinDbg vb.) hissettiği an kullanıcıya veya analiste hiçbir uyarı vermeden (silent exit) süreci sonlandıran bir güvenlik katmanı inşa etmektir.
+<a id="turkce"></a>
+## 🇹🇷 Türkçe
 
-## 2. Teknik Derinlik ve Analiz Heuristikleri
-Proje, standart Windows API'lerinin ötesine geçerek, işletim sistemi ve işlemci mimarisi seviyesinde derinlemesine kontroller yapar:
+Anti-Debug Trap, C++17 ile Windows x64 mimarisi için geliştirilmiş; uygulamanın kendi çalışma zamanı (runtime) ortamını analiz ederek bir hata ayıklayıcı (debugger) tarafından izlenip izlenmediğini otonom olarak tespit eden ileri seviye bir "Evasion" (Sakınma) mekanizmasıdır.
 
-### A. İşletim Sistemi Seviyesi Denetimler (Windows Kernel & libc)
-* **PEB (Process Environment Block) Analizi:** `IsDebuggerPresent()` kontrolü ile Windows çekirdeğinin süreç için tuttuğu "BeingDebugged" bayrağı anlık olarak sorgulanır.
-* **Sessiz İnfaz (libc):** `stdlib.h` kütüphanesi üzerinden sağlanan `exit(0)` çağrısı kullanılır. Bu sayede tersine mühendisin "exception handling" veya "message box" üzerinden iz sürmesi engellenmiş olur.
+### 🚀 Özellikler
+* **PEB (Process Environment Block) Analizi:** Windows çekirdeğinin süreç için tuttuğu `BeingDebugged` bayrağının anlık olarak sorgulanması.
+* **Software Breakpoint Avı:** Bellek üzerinde dinamik tarama yapılarak x64dbg/WinDbg gibi araçların enjekte ettiği `0xCC` (INT 3) opcode'larının tespiti.
+* **Dinamik Disassembly:** `Capstone Engine` kütüphanesi kullanılarak, çalışma anında kritik fonksiyonların de-compile edilmesi ve bütünlük doğrulaması.
+* **Silent Exit (Sessiz İnfaz):** Analiz tespit edildiğinde `exit(0)` çağrısı ile analiste hiçbir uyarı, hata mesajı veya "exception" vermeden sürecin anında sonlandırılması.
 
-### B. Bellek ve Kod Bütünlüğü Denetimi (Capstone Engine)
-* **Software Breakpoint Avı (0xCC / INT 3 Tespit):** Debugger'ların kod akışını durdurmak için enjekte ettiği `0xCC` byte'larını tespit eder.
-* **Dinamik Disassembly:** `Capstone Engine` kullanılarak, uygulamanın kritik fonksiyonları çalışma anında de-compile edilir.
-* **Opcode Doğrulama:** Bellekteki makine kodu taranarak orijinal opcode yapısında bir bozulma veya dışarıdan müdahale (inline patching) olup olmadığı doğrulanır.
+### 🛡️ MITRE ATT&CK Matrisi
 
-## 3. Geliştirme Yol Haritası (Milestones)
+| ID | İsim | Açıklama |
+| :--- | :--- | :--- |
+| **T1622** | Debugger Evasion | PEB blokları üzerinden sürecin bir debugger ile kancalanıp (hook) kancalanmadığının tespiti. |
+| **T1497** | Virtualization/Sandbox Evasion | Çalışma ortamının bir analist tarafından manipüle edildiğinin anlaşılması ve silent-exit uygulanması. |
+| **T1027** | Obfuscated Files or Information | Yazılım kesmelerinin (Software Breakpoints - INT3) tespit edilerek dinamik analizin bloke edilmesi. |
+| **T1012** | Query Registry / System | Windows iç yapılarına (API seviyesinin altına) inerek sistem durumunun doğrulanması. |
 
-### 📅 Aşama 1: Ortam Hazırlığı ve Entegrasyon
-* C++ geliştirme ortamının yapılandırılması.
-* `Capstone Engine` kütüphanesinin projeye dahil edilmesi ve CMake konfigürasyonlarının tamamlanması.
+### ⚙️ Neden C++ ve Capstone?
+Modern siber güvenlikte sadece geleneksel API çağrılarına (örneğin `IsDebuggerPresent`) güvenmek yeterli değildir; bu çağrılar kolayca yamalanabilir (patching). C++ dili, işletim sistemi çekirdeğine (Windows Kernel) ve bellek adreslerine en alt seviyeden doğrudan erişim sağlar. `Capstone Engine` entegrasyonu ise, bellekteki makine kodunun çalışma anında okunmasını ve dışarıdan yapılan "inline patching" müdahalelerinin tespit edilmesini mümkün kılar.
 
-### 🔍 Aşama 2: Windows API Kontrolleri
-* `windows.h` üzerinden temel anti-debug bayraklarının kodlanması ve PEB yapısının sorgulanması.
+### 📊 Teknik Detaylar: Opcode Doğrulama ve INT3 Tarama
+Bu araç, tersine mühendislerin kod akışını durdurmak için kullandığı yazılımsal kesmeleri matematiksel ve yapısal olarak analiz eder. Bellek üzerindeki fonksiyonlar byte dizileri halinde okunur:
 
-### 🧠 Aşama 3: Capstone ile Bellek Analizi
-* Kritik fonksiyonların bellek adreslerinin Capstone motoruna beslenerek çalışma anında assembly çıktısının alınması.
-* Yazılım kesmelerinin (breakpoint) taranması ve tespit algoritmasının optimizasyonu.
+* Eğer okunan bellek adresinde `0xCC` (INT 3 kesmesi) tespit edilirse.
+* Sistem anında **"Evasion"** moduna geçer ve "Exception Handling" süreçlerine yakalanmamak için standart C kütüphanesi üzerinden süreci yok eder.
 
-### 🛡️ Aşama 4: Optimizasyon ve Test
-* Projenin **Release** modunda derlenerek "False-Positive" durumlarının elenmesi.
-* x64dbg ve benzeri araçlarla stres testlerinin yapılması.
+### 🛠 Kurulum ve Derleme (Release Mode)
 
-## 4. Somut Çıktılar
-* **Güvenli Binary (.exe):** Anti-debug mekanizmalarını içeren optimize edilmiş Windows uygulaması.
-* **Kaynak Kodlar:** Modüler ve yorum satırlarıyla zenginleştirilmiş C++ kodları.
-* **CMake Yapısı:** Projenin her ortamda kolayca derlenebilmesini sağlayan konfigürasyon dosyaları.
+Projeyi bağımlılıklarıyla (Capstone) beraber derlemek için:
 
-## 5. Kurulum ve Derleme
-Projeyi bağımlılıklarıyla beraber derlemek için aşağıdaki adımları izleyin:
 ```bash
-git clone https://github.com/gizemkizilay/Anti-Debug-Kapani.git
+git clone [https://github.com/gizemkizilay/Anti-Debug-Kapani.git](https://github.com/gizemkizilay/Anti-Debug-Kapani.git)
 cd Anti-Debug-Kapani
 mkdir build && cd build
 cmake ..
 cmake --build . --config Release
-```
-
-## 6. Beklenen Derinlik ve Özdeğerlendirme
-* **1. Neden Bu Mimari Seçildi?:** Geleneksel anti-debug yöntemleri (örneğin sadece `IsDebuggerPresent` kullanımı) modern tersine mühendisler tarafından kolayca yamalanabilir (patch). Bu nedenle sadece API seviyesinde kalmayıp, işletim sistemi çekirdeği (PEB) ve işlemci/bellek seviyesinde (INT3 taraması, Opcode doğrulama) çok katmanlı ve hibrit bir mimari tercih edilmiştir.
-* **2. Ana Güvenlik Sonuçları:** Sistem, zararlı analiz araçlarına karşı yüksek bir başarıyla "silent exit" (sessiz kapanış) sergiler. Analiste hiçbir hata mesajı vermeyerek "Exception Handling" üzerinden iz sürmeyi imkansız kılar ve kodun çalışma anındaki (runtime) bütünlüğünü garanti altına alır.
-* **3. Üretim (Production) Kullanımı ve Genişletilebilirlik:** Bu prototip, üretim aşamasında ticari yazılımların DRM (Dijital Haklar Yönetimi) sistemlerine, lisanslama modüllerine veya oyunların Anti-Cheat (Hile Koruma) motorlarına doğrudan entegre edilebilir. Gelecekte projeye kod karmaşıklaştırma (Obfuscation), Anti-Dump teknikleri ve Ring0 (Kernel Mode) sürücü seviyesi kontroller eklenerek sistem çok daha ileri bir seviyeye taşınabilir.
