@@ -9,7 +9,7 @@ set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 set(CMAKE_CXX_STANDARD 17)
 
 # C++ Dosyası
-add_executable(AntiDebugTrap main.cpp)
+add_executable(AntiDebugTrap src/main.cpp)
 
 # Capstone Kütüphanesini CMake FetchContent ile dahil etme (En kolay yöntem)
 include(FetchContent)
