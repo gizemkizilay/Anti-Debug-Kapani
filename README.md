@@ -33,6 +33,13 @@ Anti-Debug Trap, C++17 ile Windows x64 mimarisi için geliştirilmiş; uygulaman
 * **Dinamik Disassembly:** `Capstone Engine` kütüphanesi kullanılarak, çalışma anında kritik fonksiyonların de-compile edilmesi ve bütünlük doğrulaması.
 * **Silent Exit (Sessiz İnfaz):** Analiz tespit edildiğinde `exit(0)` çağrısı ile analiste hiçbir uyarı, hata mesajı veya "exception" vermeden sürecin anında sonlandırılması.
 
+### 📂 Proje Raporları ve Analizler
+Aşağıdaki bağlantılardan proje ile ilgili detaylı teknik raporlara ulaşabilirsiniz:
+
+* 📑 **[Checkup Raporu (Derinlemesine İnceleme)](CHECKUP.md)**
+* 📋 **[Yapılacaklar Listesi (Roadmap)](TODO.md)**
+* 📜 **[Değişim Günlüğü (Changelog)](CHANGELOG.md)**
+
 ### 🛡️ MITRE ATT&CK Matrisi
 
 | ID | İsim | Açıklama |
