@@ -1,5 +1,21 @@
-- name: CMake Konfigürasyonu
-      # Komutun sonuna mutlaka bir nokta (.) eklemeliyiz ki CMake kodları nerede bulacağını bilsin
+name: C++ Anti-Debug Build Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Repoyu Klonla (Checkout)
+      uses: actions/checkout@v3
+
+    - name: CMake Konfigürasyonu
+      # Sorunu çözen kısım burası: "-S ." ekleyerek robota "CMakeLists dosyası tam olarak bulunduğun ana dizinde" diyoruz.
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: Projeyi Derle (Build)
