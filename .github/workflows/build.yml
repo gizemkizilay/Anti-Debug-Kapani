@@ -1,22 +1,46 @@
 name: C++ Anti-Debug Build Pipeline
 
+# ── Workflow tetikleyicileri ──────────────────────────────────────────────────
 on:
   push:
-    branches: [ "main" ]
+    branches: [main, develop]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: windows-latest
 
+    # ── Matrix build: Debug ve Release ───────────────────────────────────────
+    strategy:
+      fail-fast: false          # bir config basarisiz olsa diger devam eder
+      matrix:
+        config: [Debug, Release]
+
     steps:
+    # ── 1. Kaynak kodu indir ──────────────────────────────────────────────────
     - name: Repoyu Klonla (Checkout)
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: CMake Konfigürasyonu
-      # Sorunu çözen kısım burası: "-S ." ekleyerek robota "CMakeLists dosyası tam olarak bulunduğun ana dizinde" diyoruz.
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+    # ── 2. CMake konfigürasyonu ───────────────────────────────────────────────
+    - name: CMake Konfigurasyonu (${{ matrix.config }})
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config }}
 
-    - name: Projeyi Derle (Build)
-      run: cmake --build build --config Release
+    # ── 3. Derleme ────────────────────────────────────────────────────────────
+    - name: Projeyi Derle - ${{ matrix.config }}
+      run: cmake --build build --config ${{ matrix.config }}
+
+    # ── 4. Testleri çalıştır ─────────────────────────────────────────────────
+    - name: Run Tests (${{ matrix.config }})
+      run: ctest --test-dir build --output-on-failure -C ${{ matrix.config }}
+
+    # ── 5. Release binary'yi artifact olarak yükle (yalnızca Release) ────────
+    - name: Upload Release Binary
+      if: matrix.config == 'Release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: AntiDebugTrap-Release
+        path: |
+          build/Release/AntiDebugTrap.exe
+          build/AntiDebugTrap.exe
+        if-no-files-found: warn
